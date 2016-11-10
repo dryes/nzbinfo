@@ -3,6 +3,7 @@
 # Author: Joseph Wiseman <joswiseman@cock.li>
 # URL: https://github.com/dryes/nzbinfo/
 
+import gzip
 import os
 import re
 import sys
@@ -12,7 +13,10 @@ from pynzb import nzb_parser
 
 def main(nzbfile):
     try:
-        nzb = open(nzbfile, 'r').read()
+        if nzbfile.split('.')[-1] == 'gz':
+            nzb = gzip.open(nzbfile, 'r').read()
+        else:
+            nzb = open(nzbfile, 'r').read()
     except:
         print('Error reading nzb.')
         return False
